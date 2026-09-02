@@ -220,7 +220,7 @@ Advanced-UART-ZedBoard-Verilog/
 
 ### 1. UART Transmitter
 
-File:
+**File:**
 
 ```text
 src/uart_tx_adv.v
@@ -237,7 +237,7 @@ The transmitter is responsible for:
 
 ### 2. UART Receiver
 
-File:
+**File:**
 
 ```text
 src/uart_rx_adv.v
@@ -255,7 +255,7 @@ The receiver is responsible for:
 
 ### 3. ZedBoard Top Module
 
-File:
+**File:**
 
 ```text
 src/uart_zedboard_top.v
@@ -273,7 +273,7 @@ Two testbenches were used:
 
 ### Normal UART Testbench
 
-File:
+**File:**
 
 ```text
 testbench/uart_tb_adv.v
@@ -283,7 +283,7 @@ This testbench verifies normal UART transmission and reception.
 
 ### Error Detection Testbench
 
-File:
+**File:**
 
 ```text
 testbench/uart_tb1_adv.v
@@ -302,7 +302,7 @@ This testbench is used to verify UART error detection functionality.
 | Test 3 | Intentional parity error | PASS |
 | Test 4 | Frame error test | Tested |
 
-### Test 1
+### Test 1 — Normal UART Communication
 
 Transmitted data:
 
@@ -324,7 +324,7 @@ PARITY ERROR = 0
 FRAME ERROR = 0
 ```
 
-### Test 2
+### Test 2 — Normal UART Communication
 
 Transmitted data:
 
@@ -346,7 +346,7 @@ PARITY ERROR = 0
 FRAME ERROR = 0
 ```
 
-### Test 3
+### Test 3 — Parity Error Detection
 
 An intentional parity error was introduced during the test.
 
@@ -359,6 +359,12 @@ FRAME ERROR = 0
 ```
 
 This confirms that the receiver can detect an incorrect parity bit.
+
+### Test 4 — Frame Error Detection
+
+A frame error condition was tested by modifying the stop-bit condition during simulation.
+
+The frame-error detection logic is included in the receiver design.
 
 ---
 
@@ -423,18 +429,16 @@ bitstream/uart_zedboard_top.bit
 
 ## Resource Utilization
 
-Resource utilization can be obtained from the Vivado synthesis and implementation reports.
+The synthesized UART design uses a very small portion of the available FPGA resources.
 
-| Resource | Utilization |
-|---|---|
-| LUTs | Refer to Vivado Report |
-| Flip-Flops | Refer to Vivado Report |
-| I/O | Refer to Vivado Report |
-| BUFG | Refer to Vivado Report |
-| Block RAM | 0 |
-| DSP | 0 |
+| Resource | Used | Available | Utilization |
+|---|---:|---:|---:|
+| Slice LUTs | 18 | 53,200 | 0.034% |
+| Slice Registers | 25 | 106,400 | 0.024% |
+| Bonded IOBs | 3 | 200 | 1.50% |
+| BUFGCTRL | 1 | 32 | 3.13% |
 
-> The exact resource utilization depends on the FPGA device, synthesis settings, and implementation configuration.
+The low resource utilization indicates that the UART controller has a lightweight RTL implementation and can be integrated into larger FPGA-based systems.
 
 ---
 
